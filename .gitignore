@@ -1,0 +1,9 @@
+# compilados
+bin/
+*.class
+
+# macOS
+.DS_Store
+
+# config local de Claude
+.claude/
