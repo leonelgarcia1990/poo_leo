@@ -11,7 +11,7 @@ import java.awt.*;
 public class PantallaCarrera extends JFrame {
 
     private int msPorPaso = 300;
-    private int casillas = 48; // largo de la pista en "casilleros"
+    private int casillas = 40; // largo de la pista en "casilleros"
 
     private ControladorJuego juego;
     private ControladorCarrera controlador;
@@ -32,9 +32,8 @@ public class PantallaCarrera extends JFrame {
         this.pistas = new JLabel[carriles.length];
 
         setTitle("Carrera en curso");
-        // tamaño segun el monitor (75% del ancho y alto de la pantalla)
-        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-        setSize((int) (pantalla.width * 0.75), (int) (pantalla.height * 0.75));
+        // tamaño fijo que entra en cualquier laptop, incluso las de 13 pulgadas
+        setSize(1100, 680);
         setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -59,10 +58,11 @@ public class PantallaCarrera extends JFrame {
         root.add(panelTitulo, BorderLayout.NORTH);
 
         // en el medio: un carril por caballo (nombre + la pista con el caballito)
-        JPanel panelCarriles = new JPanel(new GridLayout(carriles.length, 1, 0, 20));
+        JPanel panelCarriles = new JPanel(new GridLayout(carriles.length, 1, 0, 30));
         for (int i = 0; i < carriles.length; i++) {
             panelCarriles.add(crearCarril(i));
         }
+        // directo en el centro: el GridLayout estira los carriles para llenar todo el alto
         root.add(panelCarriles, BorderLayout.CENTER);
 
         // abajo: mensaje de estado y el boton (oculto hasta que termine)
@@ -82,21 +82,23 @@ public class PantallaCarrera extends JFrame {
 
     private JPanel crearCarril(int i) {
         CarrilDTO carril = carriles[i];
-        JPanel panelCarril = new JPanel(new BorderLayout(15, 0));
+        // FlowLayout centrado: el nombre + la pista quedan como un bloque centrado en la ventana
+        JPanel panelCarril = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 0));
 
         String etiqueta = carril.getNombre() + " [" + carril.getTipo() + "]" + (carril.esDelJugador() ? " (vos)" : "");
         JLabel lblNombre = new JLabel(etiqueta);
         lblNombre.setFont(fuenteTexto);
         lblNombre.setPreferredSize(new Dimension(260, 30));
-        panelCarril.add(lblNombre, BorderLayout.WEST);
+        panelCarril.add(lblNombre);
 
         // la pista es una linea con el caballo arrancando en el principio
         JLabel pista = new JLabel(dibujarPista(0));
         pista.setFont(fuentePista);
+        pista.setHorizontalAlignment(SwingConstants.CENTER);
         if (carril.esDelJugador()) {
             pista.setForeground(new Color(40, 130, 70));
         }
-        panelCarril.add(pista, BorderLayout.CENTER);
+        panelCarril.add(pista);
 
         pistas[i] = pista;
         return panelCarril;

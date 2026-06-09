@@ -19,9 +19,8 @@ public class PantallaPosiciones extends JFrame {
         this.juego = juego;
 
         setTitle("Tabla de posiciones");
-        // tamaño segun el monitor (75% del ancho y alto de la pantalla)
-        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-        setSize((int) (pantalla.width * 0.75), (int) (pantalla.height * 0.75));
+        // tamaño fijo que entra en cualquier laptop, incluso las de 13 pulgadas
+        setSize(1100, 680);
         setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);

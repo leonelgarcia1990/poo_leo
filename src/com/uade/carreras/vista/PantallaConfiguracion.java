@@ -39,9 +39,8 @@ public class PantallaConfiguracion extends JFrame {
         this.pistaRadios = new JRadioButton[pistas.length];
 
         setTitle("Configuración de la Carrera");
-        // tamaño segun el monitor (75% del ancho y alto de la pantalla)
-        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-        setSize((int) (pantalla.width * 0.75), (int) (pantalla.height * 0.75));
+        // tamaño fijo que entra en cualquier laptop, incluso las de 13 pulgadas
+        setSize(1100, 680);
         setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -67,15 +66,15 @@ public class PantallaConfiguracion extends JFrame {
         root.add(titulo, BorderLayout.NORTH);
 
         // las 3 secciones una abajo de la otra
-        JPanel caballosYPistas = new JPanel(new BorderLayout(0, 25));
+        JPanel caballosYPistas = new JPanel(new BorderLayout(0, 12));
         caballosYPistas.add(crearSeccionCaballos(), BorderLayout.NORTH);
         caballosYPistas.add(crearSeccionPistas(), BorderLayout.CENTER);
 
-        JPanel contenido = new JPanel(new BorderLayout(0, 25));
+        JPanel contenido = new JPanel(new BorderLayout(0, 12));
         contenido.add(crearSeccionJugador(), BorderLayout.NORTH);
         contenido.add(caballosYPistas, BorderLayout.CENTER);
 
-        JPanel wrapper = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 12));
+        JPanel wrapper = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 6));
         wrapper.add(contenido);
         root.add(wrapper, BorderLayout.CENTER);
 
@@ -94,7 +93,7 @@ public class PantallaConfiguracion extends JFrame {
         TitledBorder borde = BorderFactory.createTitledBorder("1. Datos del jugador");
         borde.setTitleFont(fuenteTitulo);
         panel.setBorder(BorderFactory.createCompoundBorder(
-                borde, BorderFactory.createEmptyBorder(12, 18, 12, 18)));
+                borde, BorderFactory.createEmptyBorder(6, 18, 6, 18)));
 
         JPanel form = new JPanel(new GridLayout(2, 1, 5, 5));
 
@@ -129,9 +128,9 @@ public class PantallaConfiguracion extends JFrame {
         TitledBorder borde = BorderFactory.createTitledBorder("2. Elegí tu caballo");
         borde.setTitleFont(fuenteTitulo);
         panel.setBorder(BorderFactory.createCompoundBorder(
-                borde, BorderFactory.createEmptyBorder(12, 18, 12, 18)));
+                borde, BorderFactory.createEmptyBorder(6, 18, 6, 18)));
 
-        JPanel filas = new JPanel(new GridLayout(caballos.length, 1, 0, 18));
+        JPanel filas = new JPanel(new GridLayout(caballos.length, 1, 0, 8));
 
         for (int i = 0; i < caballos.length; i++) {
             JRadioButton radio = new JRadioButton(caballos[i].toString());
@@ -150,9 +149,9 @@ public class PantallaConfiguracion extends JFrame {
         TitledBorder borde = BorderFactory.createTitledBorder("3. Elegí la pista");
         borde.setTitleFont(fuenteTitulo);
         panel.setBorder(BorderFactory.createCompoundBorder(
-                borde, BorderFactory.createEmptyBorder(12, 18, 12, 18)));
+                borde, BorderFactory.createEmptyBorder(6, 18, 6, 18)));
 
-        JPanel filas = new JPanel(new GridLayout(pistas.length, 1, 0, 18));
+        JPanel filas = new JPanel(new GridLayout(pistas.length, 1, 0, 8));
 
         for (int i = 0; i < pistas.length; i++) {
             JRadioButton radio = new JRadioButton(pistas[i].toString());
