@@ -3,12 +3,15 @@ package com.uade.carreras.controlador;
 import com.uade.carreras.modelo.Caballo;
 import com.uade.carreras.modelo.Jugador;
 import com.uade.carreras.modelo.Pista;
+
 import com.uade.carreras.gestor.GestorCaballos;
 import com.uade.carreras.gestor.GestorPistas;
 import com.uade.carreras.gestor.GestorJugadores;
+
 import com.uade.carreras.dao.JugadorDAO;
 import com.uade.carreras.dao.CaballoDAO;
-import com.uade.carreras.dao.DatabaseInitializerDAO;
+import com.uade.carreras.dao.InicializadorBaseDatosDAO;
+
 import com.uade.carreras.dto.CaballoDTO;
 import com.uade.carreras.dto.PistaDTO;
 import com.uade.carreras.dto.ConfiguracionCarreraDTO;
@@ -19,7 +22,7 @@ import java.util.List;
 
 // controlador principal del juego. lo usan todas las pantallas.
 public class ControladorJuego {
-
+     //atributos
     private Caballo[] caballos;
     private Pista[] pistas;
     private GestorJugadores gestorJugadores = new GestorJugadores();
@@ -29,9 +32,10 @@ public class ControladorJuego {
     private String nombreJugadorActual;
     private String emailJugadorActual;
 
+    //el constructor se encarga de inicializar la base de datos 
+    // y cargar los caballos y pistas disponibles
     public ControladorJuego() {
-        // creo las tablas y cargo los caballos y pistas si hace falta
-        new DatabaseInitializerDAO().inicializar();
+        new InicializadorBaseDatosDAO().inicializar();
         this.caballos = new GestorCaballos().getCaballos();
         this.pistas = new GestorPistas().getPistas();
     }

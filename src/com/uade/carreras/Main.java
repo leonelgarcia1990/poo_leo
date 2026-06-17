@@ -9,8 +9,7 @@ public class Main {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            // un solo controlador para toda la sesion asi se acumula el puntaje
-            ControladorJuego juego = new ControladorJuego();
+            ControladorJuego juego = new ControladorJuego(); // un solo controlador
             PantallaPrincipal frame = new PantallaPrincipal(juego);
             frame.setVisible(true);
         });

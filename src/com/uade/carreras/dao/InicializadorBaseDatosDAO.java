@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 // crea las tablas si no existen y carga los caballos y pistas la primera vez
-public class DatabaseInitializerDAO {
+public class InicializadorBaseDatosDAO {
 
     public void inicializar() {
         try {
