@@ -10,7 +10,6 @@ public class Jugador {
         this(nombre, email, 0);
     }
 
-    // este constructor lo uso cuando el jugador ya existia en la base y traigo su puntaje
     public Jugador(String nombre, String email, int puntajeInicial) {
         this.nombre = nombre;
         this.email = email;

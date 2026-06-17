@@ -1,6 +1,5 @@
 package com.uade.carreras.dto;
 
-// datos de la pista para mostrar en la pantalla
 public class PistaDTO {
 
     private String nombre;

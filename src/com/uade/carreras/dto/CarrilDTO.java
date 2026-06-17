@@ -1,6 +1,5 @@
 package com.uade.carreras.dto;
 
-// datos de un carril de la carrera (un caballo y cuanto avanzo)
 public class CarrilDTO {
 
     private String nombre;

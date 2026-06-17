@@ -11,7 +11,6 @@ public class CaballoVelocista extends Caballo {
         return "Velocista";
     }
 
-    // arranca muy rapido pero gasta mas energia
     @Override
     public void avanzar() {
         double factor = 0.4 + 0.6 * (energiaActual / 100.0);

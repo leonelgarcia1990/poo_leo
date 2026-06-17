@@ -1,6 +1,5 @@
 package com.uade.carreras.dto;
 
-// datos del resultado para mostrar al final de la carrera
 public class ResultadoCarreraDTO {
 
     private String nombreGanador;

@@ -16,7 +16,7 @@ public class PantallaRanking extends JFrame {
         this.juego = juego;
 
         setTitle("Ranking histórico");
-        // tamaño fijo que entra en cualquier laptop, incluso las de 13 pulgadas
+
         setSize(1100, 680);
         setResizable(false);
         setLocationRelativeTo(null);
@@ -34,7 +34,6 @@ public class PantallaRanking extends JFrame {
         titulo.setFont(new Font("SansSerif", Font.BOLD, 30));
         root.add(titulo, BorderLayout.NORTH);
 
-        // dos rankings, uno al lado del otro
         JPanel panelTablas = new JPanel(new GridLayout(1, 2, 20, 0));
         panelTablas.add(crearPanelRanking("Jugadores",
                 new String[]{"Pos.", "Jugador", "Email", "Puntos"},
@@ -53,7 +52,6 @@ public class PantallaRanking extends JFrame {
         setContentPane(root);
     }
 
-    // arma un panel con un titulo y una tabla para un ranking
     private JPanel crearPanelRanking(String subtitulo, String[] columnas, RankingDTO[] filas) {
         JPanel panel = new JPanel(new BorderLayout(0, 10));
 

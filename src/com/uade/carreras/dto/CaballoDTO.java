@@ -1,6 +1,5 @@
 package com.uade.carreras.dto;
 
-// datos del caballo para mostrar en la pantalla
 public class CaballoDTO {
 
     private String nombre;

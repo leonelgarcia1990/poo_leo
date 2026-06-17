@@ -19,7 +19,7 @@ public class PantallaPosiciones extends JFrame {
         this.juego = juego;
 
         setTitle("Tabla de posiciones");
-        // tamaño fijo que entra en cualquier laptop, incluso las de 13 pulgadas
+
         setSize(1100, 680);
         setResizable(false);
         setLocationRelativeTo(null);
@@ -79,17 +79,17 @@ public class PantallaPosiciones extends JFrame {
     }
 
     private void registrarEventos() {
-        // seguir jugando: vuelve a la configuracion (mismo jugador, sigue sumando puntos)
+
         btnSeguir.addActionListener(e -> {
             new PantallaConfiguracion(juego).setVisible(true);
             dispose();
         });
-        // ver ranking: abre el ranking historico de la base
+
         btnRanking.addActionListener(e -> {
             new PantallaRanking(juego).setVisible(true);
             dispose();
         });
-        // terminar: cierra el programa
+
         btnTerminar.addActionListener(e -> System.exit(0));
     }
 }

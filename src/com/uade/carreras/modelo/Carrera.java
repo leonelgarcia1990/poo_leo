@@ -22,7 +22,6 @@ public class Carrera {
     public boolean isCarreraFinalizada() { return carreraFinalizada; }
     public Caballo getGanador() { return ganador; }
 
-    // hace avanzar a todos los caballos un paso
     public void paso() {
         if (carreraFinalizada) {
             return;
@@ -30,11 +29,11 @@ public class Carrera {
         for (int i = 0; i < caballos.length; i++) {
             caballos[i].avanzar();
         }
-        // el ganador es el primero que cruza la meta y despues no cambia
+
         if (ganador == null) {
             this.ganador = obtenerGanador();
         }
-        // la carrera termina cuando todos cruzaron la meta
+
         if (todosLlegaron()) {
             this.carreraFinalizada = true;
         }
@@ -57,7 +56,6 @@ public class Carrera {
         return ganador == caballoJugador;
     }
 
-    // busca el caballo que va primero entre los que ya cruzaron la meta
     private Caballo obtenerGanador() {
         Caballo mejor = null;
         for (int i = 0; i < caballos.length; i++) {
@@ -71,7 +69,6 @@ public class Carrera {
         return mejor;
     }
 
-    // en que posicion va un caballo (1 = primero)
     public int obtenerPosicion(Caballo objetivo) {
         int posicion = 1;
         for (int i = 0; i < caballos.length; i++) {
@@ -82,9 +79,8 @@ public class Carrera {
         return posicion;
     }
 
-    // devuelve los caballos ordenados del que mas recorrio al que menos
     public Caballo[] getCaballosOrdenados() {
-        // copio el array para no desordenar el original
+
         Caballo[] orden = new Caballo[caballos.length];
         for (int i = 0; i < caballos.length; i++) {
             orden[i] = caballos[i];

@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-// guarda en la base el resultado de una carrera
 public class CarreraDAO {
 
     public void guardarResultado(String nombreJugador, String emailJugador, int puntajeTotal,
@@ -27,7 +26,6 @@ public class CarreraDAO {
         }
     }
 
-    // si el jugador ya existe le actualizo el puntaje, si no lo creo
     private int obtenerOCrearJugador(Connection conn, String nombre, String email,
                                      int puntajeTotal) throws SQLException {
         PreparedStatement buscar = conn.prepareStatement("SELECT id FROM jugador WHERE email = ?");
@@ -67,7 +65,6 @@ public class CarreraDAO {
         return ultimoId(conn, "carrera");
     }
 
-    // inserto una fila por cada caballo de la tabla de posiciones
     private void insertarPosiciones(Connection conn, int carreraId,
                                     PosicionDTO[] tabla) throws SQLException {
         String sql = "INSERT INTO posicion "
@@ -85,7 +82,6 @@ public class CarreraDAO {
         }
     }
 
-    // busca el ultimo id que se genero en una tabla
     private int ultimoId(Connection conn, String tabla) throws SQLException {
         Statement s = conn.createStatement();
         ResultSet rs = s.executeQuery("SELECT MAX(id) FROM " + tabla);

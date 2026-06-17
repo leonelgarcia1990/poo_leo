@@ -10,7 +10,6 @@ import com.uade.carreras.dto.CarrilDTO;
 import com.uade.carreras.dto.ResultadoCarreraDTO;
 import com.uade.carreras.dto.PosicionDTO;
 
-
 public class ControladorCarrera {
 
     private Jugador jugador;
@@ -44,7 +43,6 @@ public class ControladorCarrera {
         jugador.agregarPuntaje(puntajeGanado);
     }
 
-    
     private void guardarEnBaseDeDatos() {
         try {
             Caballo ganador = carrera.getGanador();

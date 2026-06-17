@@ -11,7 +11,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-// ranking de caballos por los puntos que juntaron en todas las carreras
 public class CaballoDAO {
 
     public List<RankingDTO> rankingCaballos() {
@@ -20,7 +19,7 @@ public class CaballoDAO {
             Connection c = DBConnection.getInstance().getConnection();
             Statement s = c.createStatement();
             ResultSet rs = s.executeQuery("SELECT id, nombre, tipo FROM caballo");
-            // para cada caballo sumo sus puntos
+
             while (rs.next()) {
                 int total = totalPuntos(c, rs.getInt("id"));
                 ranking.add(new RankingDTO(0, rs.getString("nombre"), rs.getString("tipo"), total));
@@ -33,7 +32,6 @@ public class CaballoDAO {
         return ranking;
     }
 
-    // sumo en java todos los puntos de un caballo (sin usar SUM)
     private int totalPuntos(Connection c, int caballoId) throws SQLException {
         int total = 0;
         PreparedStatement ps = c.prepareStatement("SELECT puntos FROM posicion WHERE caballo_id = ?");
@@ -45,7 +43,6 @@ public class CaballoDAO {
         return total;
     }
 
-    // ordeno de mayor a menor y les pongo el numero de posicion
     private void ordenarPorPuntos(List<RankingDTO> ranking) {
         for (int i = 0; i < ranking.size(); i++) {
             for (int j = i + 1; j < ranking.size(); j++) {

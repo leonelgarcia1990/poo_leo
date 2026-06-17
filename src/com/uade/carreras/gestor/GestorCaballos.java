@@ -5,7 +5,6 @@ import com.uade.carreras.modelo.CaballoVelocista;
 import com.uade.carreras.modelo.CaballoResistente;
 import com.uade.carreras.modelo.CaballoEquilibrado;
 
-// arma la lista de caballos del juego
 public class GestorCaballos {
 
     private Caballo[] caballos;

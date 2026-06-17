@@ -47,7 +47,6 @@ public class PantallaConfiguracion extends JFrame {
         construirPantalla();
         registrarEventos();
 
-        // si vengo de "Seguir jugando" dejo el nombre y email puestos y bloqueados
         if (juego.hayJugador()) {
             nombreField.setText(juego.getNombreJugador());
             emailField.setText(juego.getEmailJugador());
@@ -64,7 +63,6 @@ public class PantallaConfiguracion extends JFrame {
         titulo.setFont(new Font("SansSerif", Font.BOLD, 32));
         root.add(titulo, BorderLayout.NORTH);
 
-        // las 3 secciones una abajo de la otra
         JPanel caballosYPistas = new JPanel(new BorderLayout(0, 12));
         caballosYPistas.add(crearSeccionCaballos(), BorderLayout.NORTH);
         caballosYPistas.add(crearSeccionPistas(), BorderLayout.CENTER);
@@ -86,7 +84,6 @@ public class PantallaConfiguracion extends JFrame {
         setContentPane(root);
     }
 
-    // seccion 1: nombre y email
     private JPanel crearSeccionJugador() {
         JPanel panel = new JPanel(new BorderLayout());
         TitledBorder borde = BorderFactory.createTitledBorder("1. Datos del jugador");
@@ -121,7 +118,6 @@ public class PantallaConfiguracion extends JFrame {
         return panel;
     }
 
-    // seccion 2: elegir el caballo (un radio button por cada uno)
     private JPanel crearSeccionCaballos() {
         JPanel panel = new JPanel(new BorderLayout());
         TitledBorder borde = BorderFactory.createTitledBorder("2. Elegí tu caballo");
@@ -142,7 +138,6 @@ public class PantallaConfiguracion extends JFrame {
         return panel;
     }
 
-    // seccion 3: elegir la pista
     private JPanel crearSeccionPistas() {
         JPanel panel = new JPanel(new BorderLayout());
         TitledBorder borde = BorderFactory.createTitledBorder("3. Elegí la pista");
@@ -168,7 +163,7 @@ public class PantallaConfiguracion extends JFrame {
     }
 
     private void iniciarCarrera() {
-        // valido los datos cuando aprieta el boton. si falta algo aviso y no sigo.
+
         String nombre = nombreField.getText().trim();
         String email = emailField.getText().trim();
 

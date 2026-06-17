@@ -1,13 +1,12 @@
 package com.uade.carreras.modelo;
 
-// clase abstracta. cada tipo de caballo hereda de esta.
 public abstract class Caballo {
 
     private int id;
     private String nombre;
     private int velocidadBase;
     private int resistencia;
-    // estos dos van cambiando durante la carrera, por eso son protected
+
     protected int energiaActual;
     protected double distanciaRecorrida;
 
@@ -20,7 +19,6 @@ public abstract class Caballo {
         this.distanciaRecorrida = 0;
     }
 
-    // cada tipo de caballo dice de que tipo es y como avanza
     public abstract String getTipo();
     public abstract void avanzar();
 

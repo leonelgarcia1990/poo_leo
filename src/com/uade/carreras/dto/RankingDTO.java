@@ -1,11 +1,10 @@
 package com.uade.carreras.dto;
 
-// una fila de un ranking (jugadores o caballos)
 public class RankingDTO {
 
     private int posicion;
     private String nombre;
-    private String detalle;   // email del jugador o tipo del caballo
+    private String detalle;
     private int puntaje;
 
     public RankingDTO(int posicion, String nombre, String detalle, int puntaje) {

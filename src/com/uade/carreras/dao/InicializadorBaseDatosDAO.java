@@ -8,7 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-// crea las tablas si no existen y carga los caballos y pistas la primera vez
 public class InicializadorBaseDatosDAO {
 
     public void inicializar() {
@@ -63,12 +62,11 @@ public class InicializadorBaseDatosDAO {
 
             c.close();
         } catch (SQLException e) {
-            // si la base no esta disponible el juego igual funciona
+
             System.err.println("No se pudo inicializar la base de datos: " + e.getMessage());
         }
     }
 
-    // carga los caballos y pistas solo si las tablas estan vacias
     private void sembrarCatalogo(Connection c) throws SQLException {
         if (tablaVacia(c, "caballo")) {
             insertarCaballo(c, 1, "Relámpago", "VELOCISTA", 92, 55);

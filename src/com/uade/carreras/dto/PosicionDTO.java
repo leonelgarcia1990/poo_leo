@@ -1,6 +1,5 @@
 package com.uade.carreras.dto;
 
-// una fila de la tabla de posiciones
 public class PosicionDTO {
 
     private int caballoId;

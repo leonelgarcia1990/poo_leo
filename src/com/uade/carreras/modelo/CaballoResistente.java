@@ -11,7 +11,6 @@ public class CaballoResistente extends Caballo {
         return "Resistente";
     }
 
-    // avanza un poco menos pero casi no pierde energia
     @Override
     public void avanzar() {
         double factor = 0.4 + 0.6 * (energiaActual / 100.0);

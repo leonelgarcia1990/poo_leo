@@ -14,7 +14,7 @@ public class PantallaPrincipal extends JFrame {
         this.juego = juego;
 
         setTitle("Carreras de Caballos");
-        // tamaño fijo que entra en cualquier laptop, incluso las de 13 pulgadas
+
         setSize(1100, 680);
         setResizable(false);
         setLocationRelativeTo(null);
@@ -28,7 +28,6 @@ public class PantallaPrincipal extends JFrame {
         JPanel root = new JPanel(new BorderLayout(10, 10));
         root.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        // panel del medio con titulo, subtitulo y boton
         JPanel panelCentro = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JPanel grupo = new JPanel(new GridLayout(3, 1, 0, 15));
 
@@ -49,7 +48,6 @@ public class PantallaPrincipal extends JFrame {
         panelCentro.add(grupo);
         root.add(panelCentro, BorderLayout.CENTER);
 
-        // panel vacio arriba para que el contenido quede mas centrado
         JPanel espacioArriba = new JPanel();
         espacioArriba.setPreferredSize(new Dimension(0, 230));
         root.add(espacioArriba, BorderLayout.NORTH);

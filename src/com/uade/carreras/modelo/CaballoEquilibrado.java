@@ -11,7 +11,6 @@ public class CaballoEquilibrado extends Caballo {
         return "Equilibrado";
     }
 
-    // ni muy rapido ni muy lento, gasta energia medio
     @Override
     public void avanzar() {
         double factor = 0.4 + 0.6 * (energiaActual / 100.0);

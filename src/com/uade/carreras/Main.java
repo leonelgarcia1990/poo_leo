@@ -9,7 +9,7 @@ public class Main {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            ControladorJuego juego = new ControladorJuego(); // un solo controlador
+            ControladorJuego juego = new ControladorJuego();
             PantallaPrincipal frame = new PantallaPrincipal(juego);
             frame.setVisible(true);
         });

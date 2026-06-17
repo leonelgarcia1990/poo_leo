@@ -11,7 +11,7 @@ import java.awt.*;
 public class PantallaCarrera extends JFrame {
 
     private int msPorPaso = 300;
-    private int casillas = 40; // largo de la pista en "casilleros"
+    private int casillas = 40;
 
     private ControladorJuego juego;
     private ControladorCarrera controlador;
@@ -32,7 +32,7 @@ public class PantallaCarrera extends JFrame {
         this.pistas = new JLabel[carriles.length];
 
         setTitle("Carrera en curso");
-        // tamaño fijo que entra en cualquier laptop, incluso las de 13 pulgadas
+
         setSize(1100, 680);
         setResizable(false);
         setLocationRelativeTo(null);
@@ -47,7 +47,6 @@ public class PantallaCarrera extends JFrame {
         JPanel root = new JPanel(new BorderLayout(10, 20));
         root.setBorder(BorderFactory.createEmptyBorder(20, 30, 20, 30));
 
-        // arriba: nombre de la pista y la distancia
         JPanel panelTitulo = new JPanel(new GridLayout(2, 1, 0, 5));
         JLabel titulo = new JLabel("🏁 " + controlador.getNombrePista(), SwingConstants.CENTER);
         titulo.setFont(new Font("SansSerif", Font.BOLD, 30));
@@ -57,15 +56,13 @@ public class PantallaCarrera extends JFrame {
         panelTitulo.add(subtitulo);
         root.add(panelTitulo, BorderLayout.NORTH);
 
-        // en el medio: un carril por caballo (nombre + la pista con el caballito)
         JPanel panelCarriles = new JPanel(new GridLayout(carriles.length, 1, 0, 30));
         for (int i = 0; i < carriles.length; i++) {
             panelCarriles.add(crearCarril(i));
         }
-        // directo en el centro: el GridLayout estira los carriles para llenar todo el alto
+
         root.add(panelCarriles, BorderLayout.CENTER);
 
-        // abajo: mensaje de estado y el boton (oculto hasta que termine)
         JPanel panelSur = new JPanel(new GridLayout(2, 1, 0, 10));
         estado.setFont(new Font("SansSerif", Font.BOLD, 22));
         btnPosiciones.setFont(new Font("SansSerif", Font.BOLD, 20));
@@ -82,7 +79,7 @@ public class PantallaCarrera extends JFrame {
 
     private JPanel crearCarril(int i) {
         CarrilDTO carril = carriles[i];
-        // FlowLayout centrado: el nombre + la pista quedan como un bloque centrado en la ventana
+
         JPanel panelCarril = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 0));
 
         String etiqueta = carril.getNombre() + " [" + carril.getTipo() + "]" + (carril.esDelJugador() ? " (vos)" : "");
@@ -91,7 +88,6 @@ public class PantallaCarrera extends JFrame {
         lblNombre.setPreferredSize(new Dimension(260, 30));
         panelCarril.add(lblNombre);
 
-        // la pista es una linea con el caballo arrancando en el principio
         JLabel pista = new JLabel(dibujarPista(0));
         pista.setFont(fuentePista);
         pista.setHorizontalAlignment(SwingConstants.CENTER);
@@ -104,7 +100,6 @@ public class PantallaCarrera extends JFrame {
         return panelCarril;
     }
 
-    // arma la linea de la pista: guiones y el caballo en la posicion que avanzo
     private String dibujarPista(int recorrido) {
         int total = controlador.getDistanciaTotal();
         int pos = (int) ((double) recorrido / total * casillas);
@@ -130,7 +125,6 @@ public class PantallaCarrera extends JFrame {
         });
     }
 
-    // el timer hace avanzar la carrera de a poco y va moviendo los caballos
     private void iniciarTimer() {
         timer = new Timer(msPorPaso, e -> {
             controlador.avanzarUnPaso();
@@ -160,7 +154,6 @@ public class PantallaCarrera extends JFrame {
         estado.setText("🏆 Ganó: " + nombreGanador + (ganoElJugador ? " — ¡Ganaste! 🎉" : ""));
         btnPosiciones.setVisible(true);
 
-        // armo el cartel con varios labels para que se vea mas grande
         Font fuente = new Font("SansSerif", Font.PLAIN, 22);
         JPanel cartel = new JPanel(new GridLayout(0, 1, 0, 8));
         cartel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));

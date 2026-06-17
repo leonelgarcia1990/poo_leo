@@ -1,6 +1,5 @@
 package com.uade.carreras.dto;
 
-// lo que el jugador eligio en la pantalla de configuracion
 public class ConfiguracionCarreraDTO {
 
     private String nombre;

@@ -2,7 +2,6 @@ package com.uade.carreras.gestor;
 
 import com.uade.carreras.modelo.Pista;
 
-// arma la lista de pistas del juego
 public class GestorPistas {
 
     private Pista[] pistas;

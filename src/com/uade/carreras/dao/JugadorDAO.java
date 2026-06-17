@@ -11,10 +11,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-// lecturas de jugadores desde la base
 public class JugadorDAO {
 
-    // devuelve el puntaje guardado de ese email, o 0 si es un jugador nuevo
     public int obtenerPuntaje(String email) {
         try {
             Connection c = DBConnection.getInstance().getConnection();
@@ -34,7 +32,6 @@ public class JugadorDAO {
         }
     }
 
-    // ranking de jugadores ordenado de mayor a menor puntaje
     public List<RankingDTO> rankingJugadores() {
         List<RankingDTO> ranking = new ArrayList<>();
         String sql = "SELECT nombre, email, puntaje_acumulado "
