@@ -5,5 +5,5 @@ bin/
 # macOS
 .DS_Store
 
-# config local de Claude
-.claude/
+# config local del editor
+.vscode/
