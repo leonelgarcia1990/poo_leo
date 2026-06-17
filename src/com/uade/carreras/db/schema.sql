@@ -60,8 +60,8 @@ CREATE TABLE IF NOT EXISTS posicion (
     id            INT AUTO_INCREMENT PRIMARY KEY,
     carrera_id    INT NOT NULL,
     caballo_id    INT NOT NULL,
-    posicion      INT NOT NULL,        -- 1 = primero
-    puntos        INT NOT NULL,        -- según GestorPuntaje (100/60/30/10)
+    posicion      INT NOT NULL,        
+    puntos        INT NOT NULL,       
     es_del_jugador BOOLEAN NOT NULL,
     CONSTRAINT fk_posicion_carrera FOREIGN KEY (carrera_id) REFERENCES carrera(id) ON DELETE CASCADE,
     CONSTRAINT fk_posicion_caballo FOREIGN KEY (caballo_id) REFERENCES caballo(id),

@@ -39,7 +39,6 @@ public class PantallaConfiguracion extends JFrame {
         this.pistaRadios = new JRadioButton[pistas.length];
 
         setTitle("Configuración de la Carrera");
-        // tamaño fijo que entra en cualquier laptop, incluso las de 13 pulgadas
         setSize(1100, 680);
         setResizable(false);
         setLocationRelativeTo(null);
