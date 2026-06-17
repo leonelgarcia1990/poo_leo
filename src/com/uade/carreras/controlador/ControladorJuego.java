@@ -20,9 +20,7 @@ import com.uade.carreras.dto.RankingDTO;
 
 import java.util.List;
 
-// controlador principal del juego. lo usan todas las pantallas.
 public class ControladorJuego {
-     //atributos
     private Caballo[] caballos;
     private Pista[] pistas;
     private GestorJugadores gestorJugadores = new GestorJugadores();
@@ -32,8 +30,6 @@ public class ControladorJuego {
     private String nombreJugadorActual;
     private String emailJugadorActual;
 
-    //el constructor se encarga de inicializar la base de datos 
-    // y cargar los caballos y pistas disponibles
     public ControladorJuego() {
         new InicializadorBaseDatosDAO().inicializar();
         this.caballos = new GestorCaballos().getCaballos();
@@ -59,12 +55,9 @@ public class ControladorJuego {
     }
 
     public ControladorCarrera iniciarCarrera(ConfiguracionCarreraDTO config) {
-        // uso el mismo jugador (por email) para que el puntaje se vaya sumando
         Jugador jugador = gestorJugadores.obtenerOCrear(config.getNombre(), config.getEmail());
-        // me guardo el nombre y email para no volver a pedirlos al "Seguir jugando"
         nombreJugadorActual = config.getNombre();
         emailJugadorActual = config.getEmail();
-        // caballos nuevos para cada carrera (arrancan en 0 y con energia 100)
         Caballo[] caballosCarrera = new GestorCaballos().getCaballos();
         Caballo caballoElegido = caballosCarrera[config.getIndiceCaballo()];
         Pista pistaElegida = pistas[config.getIndicePista()];
@@ -84,12 +77,10 @@ public class ControladorJuego {
         return emailJugadorActual;
     }
 
-    // tabla de posiciones de la ultima carrera
     public PosicionDTO[] getTablaPosiciones() {
         return ultimaCarrera.getTablaPosiciones();
     }
 
-    // rankings historicos leidos de la base
     public RankingDTO[] getRankingJugadores() {
         List<RankingDTO> ranking = jugadorDAO.rankingJugadores();
         return ranking.toArray(new RankingDTO[0]);

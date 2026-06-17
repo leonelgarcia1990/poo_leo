@@ -10,7 +10,7 @@ import com.uade.carreras.dto.CarrilDTO;
 import com.uade.carreras.dto.ResultadoCarreraDTO;
 import com.uade.carreras.dto.PosicionDTO;
 
-// controlador de una carrera. la pantalla le pide los datos a este.
+
 public class ControladorCarrera {
 
     private Jugador jugador;
@@ -29,7 +29,6 @@ public class ControladorCarrera {
         this.carrera = new Carrera(pista.getDistancia(), caballos, caballoJugador);
     }
 
-    // la pantalla llama a esto en cada paso (con el Timer)
     public void avanzarUnPaso() {
         carrera.paso();
         if (carrera.isCarreraFinalizada() && !puntajeAplicado) {
@@ -45,7 +44,7 @@ public class ControladorCarrera {
         jugador.agregarPuntaje(puntajeGanado);
     }
 
-    // guarda la carrera en la base. si falla, el juego sigue igual.
+    
     private void guardarEnBaseDeDatos() {
         try {
             Caballo ganador = carrera.getGanador();
