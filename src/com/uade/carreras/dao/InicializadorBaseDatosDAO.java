@@ -1,8 +1,8 @@
 package com.uade.carreras.dao;
 
-import com.uade.carreras.db.JPAUtil;
-import com.uade.carreras.entidad.CaballoEntity;
-import com.uade.carreras.entidad.PistaEntity;
+import com.uade.carreras.config.JPAUtil;
+import com.uade.carreras.entity.CaballoEntity;
+import com.uade.carreras.entity.PistaEntity;
 
 import jakarta.persistence.EntityManager;
 

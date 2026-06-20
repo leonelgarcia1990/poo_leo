@@ -8,11 +8,11 @@
     <persistence-unit name="carrerasPU">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
-        <class>com.uade.carreras.entidad.JugadorEntity</class>
-        <class>com.uade.carreras.entidad.CaballoEntity</class>
-        <class>com.uade.carreras.entidad.PistaEntity</class>
-        <class>com.uade.carreras.entidad.CarreraEntity</class>
-        <class>com.uade.carreras.entidad.PosicionEntity</class>
+        <class>com.uade.carreras.entity.JugadorEntity</class>
+        <class>com.uade.carreras.entity.CaballoEntity</class>
+        <class>com.uade.carreras.entity.PistaEntity</class>
+        <class>com.uade.carreras.entity.CarreraEntity</class>
+        <class>com.uade.carreras.entity.PosicionEntity</class>
 
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>

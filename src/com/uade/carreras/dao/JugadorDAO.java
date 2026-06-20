@@ -1,8 +1,8 @@
 package com.uade.carreras.dao;
 
-import com.uade.carreras.db.JPAUtil;
+import com.uade.carreras.config.JPAUtil;
 import com.uade.carreras.dto.RankingDTO;
-import com.uade.carreras.entidad.JugadorEntity;
+import com.uade.carreras.entity.JugadorEntity;
 
 import jakarta.persistence.EntityManager;
 

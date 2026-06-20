@@ -1,7 +1,7 @@
 package com.uade.carreras;
 
-import com.uade.carreras.controlador.ControladorJuego;
-import com.uade.carreras.vista.PantallaPrincipal;
+import com.uade.carreras.controller.ControladorJuego;
+import com.uade.carreras.ui.PantallaPrincipal;
 
 import javax.swing.SwingUtilities;
 

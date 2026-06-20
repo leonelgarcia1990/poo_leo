@@ -1,12 +1,12 @@
 package com.uade.carreras.dao;
 
-import com.uade.carreras.db.JPAUtil;
+import com.uade.carreras.config.JPAUtil;
 import com.uade.carreras.dto.PosicionDTO;
-import com.uade.carreras.entidad.CaballoEntity;
-import com.uade.carreras.entidad.CarreraEntity;
-import com.uade.carreras.entidad.JugadorEntity;
-import com.uade.carreras.entidad.PistaEntity;
-import com.uade.carreras.entidad.PosicionEntity;
+import com.uade.carreras.entity.CaballoEntity;
+import com.uade.carreras.entity.CarreraEntity;
+import com.uade.carreras.entity.JugadorEntity;
+import com.uade.carreras.entity.PistaEntity;
+import com.uade.carreras.entity.PosicionEntity;
 
 import jakarta.persistence.EntityManager;
 
