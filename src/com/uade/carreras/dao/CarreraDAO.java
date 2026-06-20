@@ -1,91 +1,69 @@
 package com.uade.carreras.dao;
 
-import com.uade.carreras.db.DBConnection;
+import com.uade.carreras.db.JPAUtil;
 import com.uade.carreras.dto.PosicionDTO;
+import com.uade.carreras.entidad.CaballoEntity;
+import com.uade.carreras.entidad.CarreraEntity;
+import com.uade.carreras.entidad.JugadorEntity;
+import com.uade.carreras.entidad.PistaEntity;
+import com.uade.carreras.entidad.PosicionEntity;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import jakarta.persistence.EntityManager;
+
+import java.util.List;
 
 public class CarreraDAO {
 
     public void guardarResultado(String nombreJugador, String emailJugador, int puntajeTotal,
                                  int pistaId, int caballoElegidoId,
                                  int caballoGanadorId, boolean ganoElJugador,
-                                 PosicionDTO[] tablaPosiciones) throws SQLException {
-        Connection conn = DBConnection.getInstance().getConnection();
+                                 PosicionDTO[] tablaPosiciones) {
+        EntityManager em = JPAUtil.getInstance().crearEntityManager();
         try {
-            int jugadorId = obtenerOCrearJugador(conn, nombreJugador, emailJugador, puntajeTotal);
-            int carreraId = insertarCarrera(conn, jugadorId, pistaId,
-                    caballoElegidoId, caballoGanadorId, ganoElJugador);
-            insertarPosiciones(conn, carreraId, tablaPosiciones);
+            em.getTransaction().begin();
+
+            JugadorEntity jugador = obtenerOCrearJugador(em, nombreJugador, emailJugador, puntajeTotal);
+
+            PistaEntity pista = em.getReference(PistaEntity.class, pistaId);
+            CaballoEntity caballoElegido = em.getReference(CaballoEntity.class, caballoElegidoId);
+            CaballoEntity caballoGanador = em.getReference(CaballoEntity.class, caballoGanadorId);
+
+            CarreraEntity carrera = new CarreraEntity(jugador, pista, caballoElegido,
+                    caballoGanador, ganoElJugador);
+            em.persist(carrera);
+
+            for (PosicionDTO p : tablaPosiciones) {
+                CaballoEntity caballo = em.getReference(CaballoEntity.class, p.getCaballoId());
+                PosicionEntity posicion = new PosicionEntity(carrera, caballo,
+                        p.getPosicion(), p.getPuntos(), p.esDelJugador());
+                em.persist(posicion);
+            }
+
+            em.getTransaction().commit();
+        } catch (RuntimeException e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw e;
         } finally {
-            conn.close();
+            em.close();
         }
     }
 
-    private int obtenerOCrearJugador(Connection conn, String nombre, String email,
-                                     int puntajeTotal) throws SQLException {
-        PreparedStatement buscar = conn.prepareStatement("SELECT id FROM jugador WHERE email = ?");
-        buscar.setString(1, email);
-        ResultSet rs = buscar.executeQuery();
-        if (rs.next()) {
-            int id = rs.getInt("id");
-            PreparedStatement actualizar = conn.prepareStatement(
-                    "UPDATE jugador SET puntaje_acumulado = ? WHERE id = ?");
-            actualizar.setInt(1, puntajeTotal);
-            actualizar.setInt(2, id);
-            actualizar.executeUpdate();
-            return id;
+    private JugadorEntity obtenerOCrearJugador(EntityManager em, String nombre, String email,
+                                               int puntajeTotal) {
+        List<JugadorEntity> jugadores = em.createQuery(
+                "select j from JugadorEntity j where j.email = :email", JugadorEntity.class)
+                .setParameter("email", email)
+                .getResultList();
+        JugadorEntity jugador;
+        if (jugadores.isEmpty()) {
+            jugador = new JugadorEntity(nombre, email, puntajeTotal);
+            em.persist(jugador);
+        } else {
+            jugador = jugadores.get(0);
+            jugador.setPuntajeAcumulado(puntajeTotal);
         }
-        PreparedStatement insertar = conn.prepareStatement(
-                "INSERT INTO jugador (nombre, email, puntaje_acumulado) VALUES (?, ?, ?)");
-        insertar.setString(1, nombre);
-        insertar.setString(2, email);
-        insertar.setInt(3, puntajeTotal);
-        insertar.executeUpdate();
-        return ultimoId(conn, "jugador");
-    }
-
-    private int insertarCarrera(Connection conn, int jugadorId, int pistaId,
-                                int caballoElegidoId, int ganadorId,
-                                boolean ganoElJugador) throws SQLException {
-        String sql = "INSERT INTO carrera "
-                + "(jugador_id, pista_id, caballo_jugador_id, caballo_ganador_id, gano_el_jugador) "
-                + "VALUES (?, ?, ?, ?, ?)";
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setInt(1, jugadorId);
-        ps.setInt(2, pistaId);
-        ps.setInt(3, caballoElegidoId);
-        ps.setInt(4, ganadorId);
-        ps.setBoolean(5, ganoElJugador);
-        ps.executeUpdate();
-        return ultimoId(conn, "carrera");
-    }
-
-    private void insertarPosiciones(Connection conn, int carreraId,
-                                    PosicionDTO[] tabla) throws SQLException {
-        String sql = "INSERT INTO posicion "
-                + "(carrera_id, caballo_id, posicion, puntos, es_del_jugador) "
-                + "VALUES (?, ?, ?, ?, ?)";
-        for (int i = 0; i < tabla.length; i++) {
-            PosicionDTO p = tabla[i];
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, carreraId);
-            ps.setInt(2, p.getCaballoId());
-            ps.setInt(3, p.getPosicion());
-            ps.setInt(4, p.getPuntos());
-            ps.setBoolean(5, p.esDelJugador());
-            ps.executeUpdate();
-        }
-    }
-
-    private int ultimoId(Connection conn, String tabla) throws SQLException {
-        Statement s = conn.createStatement();
-        ResultSet rs = s.executeQuery("SELECT MAX(id) FROM " + tabla);
-        rs.next();
-        return rs.getInt(1);
+        return jugador;
     }
 }

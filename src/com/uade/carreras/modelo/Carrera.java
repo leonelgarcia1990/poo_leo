@@ -69,6 +69,12 @@ public class Carrera {
         return mejor;
     }
 
+    public int calcularPuntos(int posicion) {
+        if (posicion == 1) return 100;
+        if (posicion == 2) return 50;
+        return 10;
+    }
+
     public int obtenerPosicion(Caballo objetivo) {
         int posicion = 1;
         for (int i = 0; i < caballos.length; i++) {

@@ -4,7 +4,6 @@ import com.uade.carreras.modelo.Caballo;
 import com.uade.carreras.modelo.Carrera;
 import com.uade.carreras.modelo.Jugador;
 import com.uade.carreras.modelo.Pista;
-import com.uade.carreras.gestor.GestorPuntaje;
 import com.uade.carreras.dao.CarreraDAO;
 import com.uade.carreras.dto.CarrilDTO;
 import com.uade.carreras.dto.ResultadoCarreraDTO;
@@ -15,7 +14,6 @@ public class ControladorCarrera {
     private Jugador jugador;
     private Pista pista;
     private Carrera carrera;
-    private GestorPuntaje gestorPuntaje = new GestorPuntaje();
     private CarreraDAO carreraDAO = new CarreraDAO();
 
     private boolean puntajeAplicado = false;
@@ -39,7 +37,7 @@ public class ControladorCarrera {
 
     private void aplicarPuntaje() {
         posicionJugador = carrera.obtenerPosicion(carrera.getCaballoJugador());
-        puntajeGanado = gestorPuntaje.calcularPuntos(posicionJugador);
+        puntajeGanado = carrera.calcularPuntos(posicionJugador);
         jugador.agregarPuntaje(puntajeGanado);
     }
 
@@ -90,7 +88,7 @@ public class ControladorCarrera {
         for (int i = 0; i < orden.length; i++) {
             Caballo c = orden[i];
             int posicion = i + 1;
-            int puntos = gestorPuntaje.calcularPuntos(posicion);
+            int puntos = carrera.calcularPuntos(posicion);
             tabla[i] = new PosicionDTO(c.getId(), posicion, c.getNombre(), c.getTipo(), puntos, carrera.esDelJugador(c));
         }
         return tabla;

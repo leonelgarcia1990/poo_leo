@@ -19,6 +19,16 @@ public abstract class Caballo {
         this.distanciaRecorrida = 0;
     }
 
+    public static Caballo crear(int id, String nombre, String tipo, int velocidadBase, int resistencia) {
+        if (tipo.equalsIgnoreCase("VELOCISTA")) {
+            return new CaballoVelocista(id, nombre, velocidadBase, resistencia);
+        }
+        if (tipo.equalsIgnoreCase("RESISTENTE")) {
+            return new CaballoResistente(id, nombre, velocidadBase, resistencia);
+        }
+        return new CaballoEquilibrado(id, nombre, velocidadBase, resistencia);
+    }
+
     public abstract String getTipo();
     public abstract void avanzar();
 

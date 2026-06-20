@@ -4,13 +4,13 @@ import com.uade.carreras.modelo.Caballo;
 import com.uade.carreras.modelo.Jugador;
 import com.uade.carreras.modelo.Pista;
 
-import com.uade.carreras.gestor.GestorCaballos;
-import com.uade.carreras.gestor.GestorPistas;
-import com.uade.carreras.gestor.GestorJugadores;
-
 import com.uade.carreras.dao.JugadorDAO;
 import com.uade.carreras.dao.CaballoDAO;
+import com.uade.carreras.dao.PistaDAO;
 import com.uade.carreras.dao.InicializadorBaseDatosDAO;
+
+import com.uade.carreras.entidad.CaballoEntity;
+import com.uade.carreras.entidad.PistaEntity;
 
 import com.uade.carreras.dto.CaballoDTO;
 import com.uade.carreras.dto.PistaDTO;
@@ -18,22 +18,57 @@ import com.uade.carreras.dto.ConfiguracionCarreraDTO;
 import com.uade.carreras.dto.PosicionDTO;
 import com.uade.carreras.dto.RankingDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ControladorJuego {
     private Caballo[] caballos;
     private Pista[] pistas;
-    private GestorJugadores gestorJugadores = new GestorJugadores();
+    private ArrayList<Jugador> jugadores = new ArrayList<>();
     private JugadorDAO jugadorDAO = new JugadorDAO();
     private CaballoDAO caballoDAO = new CaballoDAO();
+    private PistaDAO pistaDAO = new PistaDAO();
     private ControladorCarrera ultimaCarrera;
     private String nombreJugadorActual;
     private String emailJugadorActual;
 
     public ControladorJuego() {
         new InicializadorBaseDatosDAO().inicializar();
-        this.caballos = new GestorCaballos().getCaballos();
-        this.pistas = new GestorPistas().getPistas();
+        this.caballos = cargarCaballos();
+        this.pistas = cargarPistas();
+    }
+
+    private Caballo[] cargarCaballos() {
+        List<CaballoEntity> entidades = caballoDAO.listarCaballos();
+        Caballo[] resultado = new Caballo[entidades.size()];
+        for (int i = 0; i < entidades.size(); i++) {
+            CaballoEntity e = entidades.get(i);
+            resultado[i] = Caballo.crear(e.getId(), e.getNombre(), e.getTipo(),
+                    e.getVelocidadBase(), e.getResistencia());
+        }
+        return resultado;
+    }
+
+    private Pista[] cargarPistas() {
+        List<PistaEntity> entidades = pistaDAO.listarPistas();
+        Pista[] resultado = new Pista[entidades.size()];
+        for (int i = 0; i < entidades.size(); i++) {
+            PistaEntity e = entidades.get(i);
+            resultado[i] = new Pista(e.getId(), e.getNombre(), e.getDistancia());
+        }
+        return resultado;
+    }
+
+    private Jugador obtenerOCrearJugador(String nombre, String email) {
+        for (int i = 0; i < jugadores.size(); i++) {
+            if (jugadores.get(i).getEmail().equals(email)) {
+                return jugadores.get(i);
+            }
+        }
+        int puntajeGuardado = jugadorDAO.obtenerPuntaje(email);
+        Jugador nuevo = new Jugador(nombre, email, puntajeGuardado);
+        jugadores.add(nuevo);
+        return nuevo;
     }
 
     public CaballoDTO[] getCaballosDisponibles() {
@@ -55,10 +90,10 @@ public class ControladorJuego {
     }
 
     public ControladorCarrera iniciarCarrera(ConfiguracionCarreraDTO config) {
-        Jugador jugador = gestorJugadores.obtenerOCrear(config.getNombre(), config.getEmail());
+        Jugador jugador = obtenerOCrearJugador(config.getNombre(), config.getEmail());
         nombreJugadorActual = config.getNombre();
         emailJugadorActual = config.getEmail();
-        Caballo[] caballosCarrera = new GestorCaballos().getCaballos();
+        Caballo[] caballosCarrera = cargarCaballos();
         Caballo caballoElegido = caballosCarrera[config.getIndiceCaballo()];
         Pista pistaElegida = pistas[config.getIndicePista()];
         ultimaCarrera = new ControladorCarrera(jugador, caballosCarrera, pistaElegida, caballoElegido);
