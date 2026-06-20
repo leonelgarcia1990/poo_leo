@@ -32,14 +32,15 @@ public class PantallaCarrera extends JFrame {
         this.pistas = new JLabel[carriles.length];
 
         setTitle("Carrera en curso");
-
-        setSize(1100, 680);
-        setResizable(false);
-        setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         construirPantalla();
         registrarEventos();
+
+        setSize(1100, 680);
+        setResizable(false);
+        setLocationRelativeTo(null);
+
         iniciarTimer();
     }
 

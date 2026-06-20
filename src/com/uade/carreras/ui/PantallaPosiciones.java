@@ -19,14 +19,14 @@ public class PantallaPosiciones extends JFrame {
         this.juego = juego;
 
         setTitle("Tabla de posiciones");
-
-        setSize(1100, 680);
-        setResizable(false);
-        setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         construirPantalla();
         registrarEventos();
+
+        setSize(1100, 680);
+        setResizable(false);
+        setLocationRelativeTo(null);
     }
 
     private void construirPantalla() {

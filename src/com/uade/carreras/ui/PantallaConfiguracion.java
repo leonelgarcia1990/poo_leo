@@ -28,8 +28,8 @@ public class PantallaConfiguracion extends JFrame {
 
     private JButton btnIniciar = new JButton("Iniciar Carrera");
 
-    private Font fuenteTexto = new Font("SansSerif", Font.PLAIN, 18);
-    private Font fuenteTitulo = new Font("SansSerif", Font.BOLD, 18);
+    private Font fuenteTexto = new Font("SansSerif", Font.PLAIN, 15);
+    private Font fuenteTitulo = new Font("SansSerif", Font.BOLD, 15);
 
     public PantallaConfiguracion(ControladorJuego juego) {
         this.controladorJuego = juego;
@@ -39,9 +39,6 @@ public class PantallaConfiguracion extends JFrame {
         this.pistaRadios = new JRadioButton[pistas.length];
 
         setTitle("Configuración de la Carrera");
-        setSize(1100, 680);
-        setResizable(false);
-        setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         construirPantalla();
@@ -53,6 +50,10 @@ public class PantallaConfiguracion extends JFrame {
             nombreField.setEnabled(false);
             emailField.setEnabled(false);
         }
+
+        setSize(1100, 680);
+        setResizable(false);
+        setLocationRelativeTo(null);
     }
 
     private void construirPantalla() {
@@ -60,7 +61,7 @@ public class PantallaConfiguracion extends JFrame {
         root.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         JLabel titulo = new JLabel("Configurá tu Carrera", SwingConstants.CENTER);
-        titulo.setFont(new Font("SansSerif", Font.BOLD, 32));
+        titulo.setFont(new Font("SansSerif", Font.BOLD, 26));
         root.add(titulo, BorderLayout.NORTH);
 
         JPanel caballosYPistas = new JPanel(new BorderLayout(0, 12));
@@ -76,8 +77,8 @@ public class PantallaConfiguracion extends JFrame {
         root.add(wrapper, BorderLayout.CENTER);
 
         JPanel panelBoton = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        btnIniciar.setFont(new Font("SansSerif", Font.BOLD, 22));
-        btnIniciar.setMargin(new Insets(15, 40, 15, 40));
+        btnIniciar.setFont(new Font("SansSerif", Font.BOLD, 18));
+        btnIniciar.setMargin(new Insets(10, 40, 10, 40));
         panelBoton.add(btnIniciar);
         root.add(panelBoton, BorderLayout.SOUTH);
 
@@ -93,8 +94,8 @@ public class PantallaConfiguracion extends JFrame {
 
         JPanel form = new JPanel(new GridLayout(2, 1, 5, 5));
 
-        nombreField.setPreferredSize(new Dimension(350, 32));
-        emailField.setPreferredSize(new Dimension(350, 32));
+        nombreField.setPreferredSize(new Dimension(350, 28));
+        emailField.setPreferredSize(new Dimension(350, 28));
         nombreField.setFont(fuenteTexto);
         emailField.setFont(fuenteTexto);
 
@@ -125,7 +126,7 @@ public class PantallaConfiguracion extends JFrame {
         panel.setBorder(BorderFactory.createCompoundBorder(
                 borde, BorderFactory.createEmptyBorder(6, 18, 6, 18)));
 
-        JPanel filas = new JPanel(new GridLayout(caballos.length, 1, 0, 8));
+        JPanel filas = new JPanel(new GridLayout(caballos.length, 1, 0, 5));
 
         for (int i = 0; i < caballos.length; i++) {
             JRadioButton radio = new JRadioButton(caballos[i].toString());
@@ -145,7 +146,7 @@ public class PantallaConfiguracion extends JFrame {
         panel.setBorder(BorderFactory.createCompoundBorder(
                 borde, BorderFactory.createEmptyBorder(6, 18, 6, 18)));
 
-        JPanel filas = new JPanel(new GridLayout(pistas.length, 1, 0, 8));
+        JPanel filas = new JPanel(new GridLayout(pistas.length, 1, 0, 5));
 
         for (int i = 0; i < pistas.length; i++) {
             JRadioButton radio = new JRadioButton(pistas[i].toString());
