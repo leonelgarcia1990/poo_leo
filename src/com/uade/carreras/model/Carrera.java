@@ -1,12 +1,72 @@
 package com.uade.carreras.model;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name = "carrera")
 public class Carrera {
 
+    // ----- Datos persistidos (resultado guardado de la carrera) -----
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(nullable = false)
+    private LocalDateTime fecha;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "jugador_id")
+    private Jugador jugador;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "pista_id")
+    private Pista pista;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "caballo_jugador_id")
+    private Caballo caballoElegido;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "caballo_ganador_id")
+    private Caballo caballoGanador;
+
+    @Column(name = "gano_el_jugador", nullable = false)
+    private boolean jugadorGano;
+
+    @OneToMany(mappedBy = "carrera", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Posicion> posiciones = new ArrayList<>();
+
+    // ----- Estado de la simulación en vivo (NO se persiste) -----
+
+    @Transient
     private double distanciaTotal;
+    @Transient
     private Caballo[] caballos;
+    @Transient
     private Caballo caballoJugador;
+    @Transient
     private boolean carreraFinalizada;
+    @Transient
     private Caballo ganador;
+
+    protected Carrera() {
+        // Constructor requerido por JPA/Hibernate
+    }
 
     public Carrera(double distanciaTotal, Caballo[] caballos, Caballo caballoJugador) {
         this.distanciaTotal = distanciaTotal;
@@ -15,6 +75,26 @@ public class Carrera {
         this.carreraFinalizada = false;
         this.ganador = null;
     }
+
+    // ----- Confirmación: completa los datos a persistir (estilo Pedido.confirmar) -----
+
+    public void confirmar(Jugador jugador, Pista pista, Caballo caballoElegido,
+                          Caballo caballoGanador, boolean jugadorGano) {
+        this.fecha = LocalDateTime.now();
+        this.jugador = jugador;
+        this.pista = pista;
+        this.caballoElegido = caballoElegido;
+        this.caballoGanador = caballoGanador;
+        this.jugadorGano = jugadorGano;
+    }
+
+    public void agregarPosicion(Posicion posicion) {
+        this.posiciones.add(posicion);
+    }
+
+    public int getId() { return id; }
+
+    // ----- Simulación -----
 
     public double getDistanciaTotal() { return distanciaTotal; }
     public Caballo[] getCaballos() { return caballos; }

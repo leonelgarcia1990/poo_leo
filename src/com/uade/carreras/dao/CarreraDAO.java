@@ -2,11 +2,11 @@ package com.uade.carreras.dao;
 
 import com.uade.carreras.config.JPAUtil;
 import com.uade.carreras.dto.PosicionDTO;
-import com.uade.carreras.entity.CaballoEntity;
-import com.uade.carreras.entity.CarreraEntity;
-import com.uade.carreras.entity.JugadorEntity;
-import com.uade.carreras.entity.PistaEntity;
-import com.uade.carreras.entity.PosicionEntity;
+import com.uade.carreras.model.Caballo;
+import com.uade.carreras.model.Carrera;
+import com.uade.carreras.model.Jugador;
+import com.uade.carreras.model.Pista;
+import com.uade.carreras.model.Posicion;
 
 import jakarta.persistence.EntityManager;
 
@@ -14,30 +14,30 @@ import java.util.List;
 
 public class CarreraDAO {
 
-    public void guardarResultado(String nombreJugador, String emailJugador, int puntajeTotal,
-                                 int pistaId, int caballoElegidoId,
+    public void guardarResultado(Carrera carrera, String nombreJugador, String emailJugador,
+                                 int puntajeTotal, int pistaId, int caballoElegidoId,
                                  int caballoGanadorId, boolean ganoElJugador,
                                  PosicionDTO[] tablaPosiciones) {
         EntityManager em = JPAUtil.getInstance().crearEntityManager();
         try {
             em.getTransaction().begin();
 
-            JugadorEntity jugador = obtenerOCrearJugador(em, nombreJugador, emailJugador, puntajeTotal);
+            Jugador jugador = obtenerOCrearJugador(em, nombreJugador, emailJugador, puntajeTotal);
 
-            PistaEntity pista = em.getReference(PistaEntity.class, pistaId);
-            CaballoEntity caballoElegido = em.getReference(CaballoEntity.class, caballoElegidoId);
-            CaballoEntity caballoGanador = em.getReference(CaballoEntity.class, caballoGanadorId);
+            Pista pista = em.getReference(Pista.class, pistaId);
+            Caballo caballoElegido = em.getReference(Caballo.class, caballoElegidoId);
+            Caballo caballoGanador = em.getReference(Caballo.class, caballoGanadorId);
 
-            CarreraEntity carrera = new CarreraEntity(jugador, pista, caballoElegido,
-                    caballoGanador, ganoElJugador);
-            em.persist(carrera);
+            carrera.confirmar(jugador, pista, caballoElegido, caballoGanador, ganoElJugador);
 
             for (PosicionDTO p : tablaPosiciones) {
-                CaballoEntity caballo = em.getReference(CaballoEntity.class, p.getCaballoId());
-                PosicionEntity posicion = new PosicionEntity(carrera, caballo,
+                Caballo caballo = em.getReference(Caballo.class, p.getCaballoId());
+                Posicion posicion = new Posicion(carrera, caballo,
                         p.getPosicion(), p.getPuntos(), p.esDelJugador());
-                em.persist(posicion);
+                carrera.agregarPosicion(posicion);
             }
+
+            em.persist(carrera);
 
             em.getTransaction().commit();
         } catch (RuntimeException e) {
@@ -50,15 +50,15 @@ public class CarreraDAO {
         }
     }
 
-    private JugadorEntity obtenerOCrearJugador(EntityManager em, String nombre, String email,
-                                               int puntajeTotal) {
-        List<JugadorEntity> jugadores = em.createQuery(
-                "select j from JugadorEntity j where j.email = :email", JugadorEntity.class)
+    private Jugador obtenerOCrearJugador(EntityManager em, String nombre, String email,
+                                         int puntajeTotal) {
+        List<Jugador> jugadores = em.createQuery(
+                "select j from Jugador j where j.email = :email", Jugador.class)
                 .setParameter("email", email)
                 .getResultList();
-        JugadorEntity jugador;
+        Jugador jugador;
         if (jugadores.isEmpty()) {
-            jugador = new JugadorEntity(nombre, email, puntajeTotal);
+            jugador = new Jugador(nombre, email, puntajeTotal);
             em.persist(jugador);
         } else {
             jugador = jugadores.get(0);

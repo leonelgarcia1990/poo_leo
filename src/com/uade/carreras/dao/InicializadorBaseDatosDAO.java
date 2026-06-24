@@ -1,8 +1,8 @@
 package com.uade.carreras.dao;
 
 import com.uade.carreras.config.JPAUtil;
-import com.uade.carreras.entity.CaballoEntity;
-import com.uade.carreras.entity.PistaEntity;
+import com.uade.carreras.model.Caballo;
+import com.uade.carreras.model.Pista;
 
 import jakarta.persistence.EntityManager;
 
@@ -25,16 +25,16 @@ public class InicializadorBaseDatosDAO {
     }
 
     private void sembrarCatalogo(EntityManager em) {
-        if (tablaVacia(em, "CaballoEntity")) {
-            em.persist(new CaballoEntity("Relámpago", "VELOCISTA", 92, 55));
-            em.persist(new CaballoEntity("Tormenta", "RESISTENTE", 68, 92));
-            em.persist(new CaballoEntity("Furia", "VELOCISTA", 90, 50));
-            em.persist(new CaballoEntity("Centella", "EQUILIBRADO", 80, 80));
+        if (tablaVacia(em, "Caballo")) {
+            em.persist(new Caballo("Relámpago", "Velocista", 92, 55));
+            em.persist(new Caballo("Tormenta", "Resistente", 68, 92));
+            em.persist(new Caballo("Furia", "Velocista", 90, 50));
+            em.persist(new Caballo("Centella", "Equilibrado", 80, 80));
         }
-        if (tablaVacia(em, "PistaEntity")) {
-            em.persist(new PistaEntity("Gran Premio Nacional", 2500));
-            em.persist(new PistaEntity("Gran Premio Carlos Pellegrini", 2400));
-            em.persist(new PistaEntity("Gran Premio Jockey Club", 2000));
+        if (tablaVacia(em, "Pista")) {
+            em.persist(new Pista("Gran Premio Nacional", 2500));
+            em.persist(new Pista("Gran Premio Carlos Pellegrini", 2400));
+            em.persist(new Pista("Gran Premio Jockey Club", 2000));
         }
     }
 

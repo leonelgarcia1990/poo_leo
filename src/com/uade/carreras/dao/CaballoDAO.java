@@ -2,7 +2,7 @@ package com.uade.carreras.dao;
 
 import com.uade.carreras.config.JPAUtil;
 import com.uade.carreras.dto.RankingDTO;
-import com.uade.carreras.entity.CaballoEntity;
+import com.uade.carreras.model.Caballo;
 
 import jakarta.persistence.EntityManager;
 
@@ -11,10 +11,10 @@ import java.util.List;
 
 public class CaballoDAO {
 
-    public List<CaballoEntity> listarCaballos() {
+    public List<Caballo> listarCaballos() {
         EntityManager em = JPAUtil.getInstance().crearEntityManager();
         try {
-            return em.createQuery("select c from CaballoEntity c order by c.id", CaballoEntity.class)
+            return em.createQuery("select c from Caballo c order by c.id", Caballo.class)
                     .getResultList();
         } catch (Exception e) {
             System.err.println("No se pudo leer el catálogo de caballos: " + e.getMessage());
@@ -30,7 +30,7 @@ public class CaballoDAO {
         try {
             List<Object[]> filas = em.createQuery(
                     "select c.nombre, c.tipo, coalesce(sum(p.puntos), 0) "
-                    + "from CaballoEntity c left join PosicionEntity p on p.caballo = c "
+                    + "from Caballo c left join Posicion p on p.caballo = c "
                     + "group by c.id, c.nombre, c.tipo "
                     + "order by coalesce(sum(p.puntos), 0) desc", Object[].class)
                     .getResultList();

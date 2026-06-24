@@ -2,7 +2,7 @@ package com.uade.carreras.dao;
 
 import com.uade.carreras.config.JPAUtil;
 import com.uade.carreras.dto.RankingDTO;
-import com.uade.carreras.entity.JugadorEntity;
+import com.uade.carreras.model.Jugador;
 
 import jakarta.persistence.EntityManager;
 
@@ -14,8 +14,8 @@ public class JugadorDAO {
     public int obtenerPuntaje(String email) {
         EntityManager em = JPAUtil.getInstance().crearEntityManager();
         try {
-            List<JugadorEntity> jugadores = em.createQuery(
-                    "select j from JugadorEntity j where j.email = :email", JugadorEntity.class)
+            List<Jugador> jugadores = em.createQuery(
+                    "select j from Jugador j where j.email = :email", Jugador.class)
                     .setParameter("email", email)
                     .getResultList();
             return jugadores.isEmpty() ? 0 : jugadores.get(0).getPuntajeAcumulado();
@@ -31,12 +31,12 @@ public class JugadorDAO {
         List<RankingDTO> ranking = new ArrayList<>();
         EntityManager em = JPAUtil.getInstance().crearEntityManager();
         try {
-            List<JugadorEntity> jugadores = em.createQuery(
-                    "select j from JugadorEntity j order by j.puntajeAcumulado desc, j.nombre",
-                    JugadorEntity.class)
+            List<Jugador> jugadores = em.createQuery(
+                    "select j from Jugador j order by j.puntajeAcumulado desc, j.nombre",
+                    Jugador.class)
                     .getResultList();
             int pos = 1;
-            for (JugadorEntity j : jugadores) {
+            for (Jugador j : jugadores) {
                 ranking.add(new RankingDTO(pos, j.getNombre(), j.getEmail(), j.getPuntajeAcumulado()));
                 pos++;
             }

@@ -4,13 +4,7 @@ import com.uade.carreras.model.Caballo;
 import com.uade.carreras.model.Jugador;
 import com.uade.carreras.model.Pista;
 
-import com.uade.carreras.dao.JugadorDAO;
-import com.uade.carreras.dao.CaballoDAO;
-import com.uade.carreras.dao.PistaDAO;
-import com.uade.carreras.dao.InicializadorBaseDatosDAO;
-
-import com.uade.carreras.entity.CaballoEntity;
-import com.uade.carreras.entity.PistaEntity;
+import com.uade.carreras.service.JuegoService;
 
 import com.uade.carreras.dto.CaballoDTO;
 import com.uade.carreras.dto.PistaDTO;
@@ -25,38 +19,24 @@ public class ControladorJuego {
     private Caballo[] caballos;
     private Pista[] pistas;
     private ArrayList<Jugador> jugadores = new ArrayList<>();
-    private JugadorDAO jugadorDAO = new JugadorDAO();
-    private CaballoDAO caballoDAO = new CaballoDAO();
-    private PistaDAO pistaDAO = new PistaDAO();
+    private JuegoService juegoService = new JuegoService();
     private ControladorCarrera ultimaCarrera;
     private String nombreJugadorActual;
     private String emailJugadorActual;
 
     public ControladorJuego() {
-        new InicializadorBaseDatosDAO().inicializar();
         this.caballos = cargarCaballos();
         this.pistas = cargarPistas();
     }
 
     private Caballo[] cargarCaballos() {
-        List<CaballoEntity> entidades = caballoDAO.listarCaballos();
-        Caballo[] resultado = new Caballo[entidades.size()];
-        for (int i = 0; i < entidades.size(); i++) {
-            CaballoEntity e = entidades.get(i);
-            resultado[i] = Caballo.crear(e.getId(), e.getNombre(), e.getTipo(),
-                    e.getVelocidadBase(), e.getResistencia());
-        }
-        return resultado;
+        List<Caballo> caballosGuardados = juegoService.listarCaballos();
+        return caballosGuardados.toArray(new Caballo[0]);
     }
 
     private Pista[] cargarPistas() {
-        List<PistaEntity> entidades = pistaDAO.listarPistas();
-        Pista[] resultado = new Pista[entidades.size()];
-        for (int i = 0; i < entidades.size(); i++) {
-            PistaEntity e = entidades.get(i);
-            resultado[i] = new Pista(e.getId(), e.getNombre(), e.getDistancia());
-        }
-        return resultado;
+        List<Pista> pistasGuardadas = juegoService.listarPistas();
+        return pistasGuardadas.toArray(new Pista[0]);
     }
 
     private Jugador obtenerOCrearJugador(String nombre, String email) {
@@ -65,7 +45,7 @@ public class ControladorJuego {
                 return jugadores.get(i);
             }
         }
-        int puntajeGuardado = jugadorDAO.obtenerPuntaje(email);
+        int puntajeGuardado = juegoService.obtenerPuntaje(email);
         Jugador nuevo = new Jugador(nombre, email, puntajeGuardado);
         jugadores.add(nuevo);
         return nuevo;
@@ -96,7 +76,7 @@ public class ControladorJuego {
         Caballo[] caballosCarrera = cargarCaballos();
         Caballo caballoElegido = caballosCarrera[config.getIndiceCaballo()];
         Pista pistaElegida = pistas[config.getIndicePista()];
-        ultimaCarrera = new ControladorCarrera(jugador, caballosCarrera, pistaElegida, caballoElegido);
+        ultimaCarrera = new ControladorCarrera(juegoService, jugador, caballosCarrera, pistaElegida, caballoElegido);
         return ultimaCarrera;
     }
 
@@ -117,12 +97,12 @@ public class ControladorJuego {
     }
 
     public RankingDTO[] getRankingJugadores() {
-        List<RankingDTO> ranking = jugadorDAO.rankingJugadores();
+        List<RankingDTO> ranking = juegoService.rankingJugadores();
         return ranking.toArray(new RankingDTO[0]);
     }
 
     public RankingDTO[] getRankingCaballos() {
-        List<RankingDTO> ranking = caballoDAO.rankingCaballos();
+        List<RankingDTO> ranking = juegoService.rankingCaballos();
         return ranking.toArray(new RankingDTO[0]);
     }
 }

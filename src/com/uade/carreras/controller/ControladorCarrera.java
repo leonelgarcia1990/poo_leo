@@ -4,7 +4,7 @@ import com.uade.carreras.model.Caballo;
 import com.uade.carreras.model.Carrera;
 import com.uade.carreras.model.Jugador;
 import com.uade.carreras.model.Pista;
-import com.uade.carreras.dao.CarreraDAO;
+import com.uade.carreras.service.JuegoService;
 import com.uade.carreras.dto.CarrilDTO;
 import com.uade.carreras.dto.ResultadoCarreraDTO;
 import com.uade.carreras.dto.PosicionDTO;
@@ -14,13 +14,15 @@ public class ControladorCarrera {
     private Jugador jugador;
     private Pista pista;
     private Carrera carrera;
-    private CarreraDAO carreraDAO = new CarreraDAO();
+    private JuegoService juegoService;
 
     private boolean puntajeAplicado = false;
     private int posicionJugador = 0;
     private int puntajeGanado = 0;
 
-    public ControladorCarrera(Jugador jugador, Caballo[] caballos, Pista pista, Caballo caballoJugador) {
+    public ControladorCarrera(JuegoService juegoService, Jugador jugador, Caballo[] caballos,
+                              Pista pista, Caballo caballoJugador) {
+        this.juegoService = juegoService;
         this.jugador = jugador;
         this.pista = pista;
         this.carrera = new Carrera(pista.getDistancia(), caballos, caballoJugador);
@@ -44,7 +46,8 @@ public class ControladorCarrera {
     private void guardarEnBaseDeDatos() {
         try {
             Caballo ganador = carrera.getGanador();
-            carreraDAO.guardarResultado(
+            juegoService.guardarResultado(
+                    carrera,
                     jugador.getNombre(),
                     jugador.getEmail(),
                     jugador.getPuntajeAcumulado(),

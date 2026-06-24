@@ -1,4 +1,4 @@
-package com.uade.carreras.entity;
+package com.uade.carreras.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,7 +13,7 @@ import jakarta.persistence.UniqueConstraint;
 @Entity
 @Table(name = "posicion",
         uniqueConstraints = @UniqueConstraint(columnNames = {"carrera_id", "caballo_id"}))
-public class PosicionEntity {
+public class Posicion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,11 +21,11 @@ public class PosicionEntity {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "carrera_id")
-    private CarreraEntity carrera;
+    private Carrera carrera;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "caballo_id")
-    private CaballoEntity caballo;
+    private Caballo caballo;
 
     @Column(nullable = false)
     private int posicion;
@@ -36,11 +36,12 @@ public class PosicionEntity {
     @Column(name = "es_del_jugador", nullable = false)
     private boolean esDelJugador;
 
-    public PosicionEntity() {
+    protected Posicion() {
+        // Constructor requerido por JPA/Hibernate
     }
 
-    public PosicionEntity(CarreraEntity carrera, CaballoEntity caballo, int posicion,
-                          int puntos, boolean esDelJugador) {
+    public Posicion(Carrera carrera, Caballo caballo, int posicion,
+                    int puntos, boolean esDelJugador) {
         this.carrera = carrera;
         this.caballo = caballo;
         this.posicion = posicion;
