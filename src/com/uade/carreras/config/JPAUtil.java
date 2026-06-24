@@ -7,10 +7,10 @@ import jakarta.persistence.Persistence;
 public class JPAUtil {
 
     private static JPAUtil instance;
-    private EntityManagerFactory emf;
+    private EntityManagerFactory entityManagerFactory;
 
     private JPAUtil() {
-        emf = Persistence.createEntityManagerFactory("carrerasPU");
+        entityManagerFactory = Persistence.createEntityManagerFactory("carrerasPU");
     }
 
     public static JPAUtil getInstance() {
@@ -21,6 +21,13 @@ public class JPAUtil {
     }
 
     public EntityManager crearEntityManager() {
-        return emf.createEntityManager();
+        return entityManagerFactory.createEntityManager();
     }
+
+    public void cerrar() {
+            if (entityManagerFactory.isOpen()) {
+                entityManagerFactory.close();
+            }
+        }
+
 }
