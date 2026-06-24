@@ -20,8 +20,7 @@ import java.util.List;
 @Table(name = "carrera")
 public class Carrera {
 
-    // ----- Datos persistidos (resultado guardado de la carrera) -----
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -51,7 +50,7 @@ public class Carrera {
     @OneToMany(mappedBy = "carrera", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Posicion> posiciones = new ArrayList<>();
 
-    // ----- Estado de la simulación en vivo (NO se persiste) -----
+  
 
     @Transient
     private double distanciaTotal;
@@ -65,7 +64,7 @@ public class Carrera {
     private Caballo ganador;
 
     protected Carrera() {
-        // Constructor requerido por JPA/Hibernate
+     
     }
 
     public Carrera(double distanciaTotal, Caballo[] caballos, Caballo caballoJugador) {
@@ -76,7 +75,6 @@ public class Carrera {
         this.ganador = null;
     }
 
-    // ----- Confirmación: completa los datos a persistir (estilo Pedido.confirmar) -----
 
     public void confirmar(Jugador jugador, Pista pista, Caballo caballoElegido,
                           Caballo caballoGanador, boolean jugadorGano) {
@@ -94,7 +92,7 @@ public class Carrera {
 
     public int getId() { return id; }
 
-    // ----- Simulación -----
+    
 
     public double getDistanciaTotal() { return distanciaTotal; }
     public Caballo[] getCaballos() { return caballos; }

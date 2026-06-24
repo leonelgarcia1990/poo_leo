@@ -13,10 +13,7 @@ import com.uade.carreras.model.Pista;
 
 import java.util.List;
 
-/**
- * Service: orquesta los DAOs y la lógica de negocio del juego.
- * Los controllers le hablan a este service y ya no usan los DAOs directamente.
- */
+
 public class JuegoService {
 
     private final CaballoDAO caballoDAO;
