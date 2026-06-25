@@ -4,7 +4,9 @@ import com.uade.carreras.model.Caballo;
 import com.uade.carreras.model.Jugador;
 import com.uade.carreras.model.Pista;
 
-import com.uade.carreras.service.JuegoService;
+import com.uade.carreras.service.CarreraService;
+import com.uade.carreras.service.JugadorService;
+import com.uade.carreras.service.RankingService;
 
 import com.uade.carreras.dto.CaballoDTO;
 import com.uade.carreras.dto.PistaDTO;
@@ -19,7 +21,9 @@ public class ControladorJuego {
     private Caballo[] caballos;
     private Pista[] pistas;
     private ArrayList<Jugador> jugadores = new ArrayList<>();
-    private JuegoService juegoService = new JuegoService();
+    private CarreraService carreraService = new CarreraService();
+    private JugadorService jugadorService = new JugadorService();
+    private RankingService rankingService = new RankingService();
     private ControladorCarrera ultimaCarrera;
     private String nombreJugadorActual;
     private String emailJugadorActual;
@@ -30,12 +34,12 @@ public class ControladorJuego {
     }
 
     private Caballo[] cargarCaballos() {
-        List<Caballo> caballosGuardados = juegoService.listarCaballos();
+        List<Caballo> caballosGuardados = carreraService.listarCaballos();
         return caballosGuardados.toArray(new Caballo[0]);
     }
 
     private Pista[] cargarPistas() {
-        List<Pista> pistasGuardadas = juegoService.listarPistas();
+        List<Pista> pistasGuardadas = carreraService.listarPistas();
         return pistasGuardadas.toArray(new Pista[0]);
     }
 
@@ -45,7 +49,7 @@ public class ControladorJuego {
                 return jugadores.get(i);
             }
         }
-        int puntajeGuardado = juegoService.obtenerPuntaje(email);
+        int puntajeGuardado = jugadorService.obtenerPuntaje(email);
         Jugador nuevo = new Jugador(nombre, email, puntajeGuardado);
         jugadores.add(nuevo);
         return nuevo;
@@ -76,7 +80,7 @@ public class ControladorJuego {
         Caballo[] caballosCarrera = cargarCaballos();
         Caballo caballoElegido = caballosCarrera[config.getIndiceCaballo()];
         Pista pistaElegida = pistas[config.getIndicePista()];
-        ultimaCarrera = new ControladorCarrera(juegoService, jugador, caballosCarrera, pistaElegida, caballoElegido);
+        ultimaCarrera = new ControladorCarrera(carreraService, jugador, caballosCarrera, pistaElegida, caballoElegido);
         return ultimaCarrera;
     }
 
@@ -97,12 +101,12 @@ public class ControladorJuego {
     }
 
     public RankingDTO[] getRankingJugadores() {
-        List<RankingDTO> ranking = juegoService.rankingJugadores();
+        List<RankingDTO> ranking = rankingService.rankingJugadores();
         return ranking.toArray(new RankingDTO[0]);
     }
 
     public RankingDTO[] getRankingCaballos() {
-        List<RankingDTO> ranking = juegoService.rankingCaballos();
+        List<RankingDTO> ranking = rankingService.rankingCaballos();
         return ranking.toArray(new RankingDTO[0]);
     }
 }
