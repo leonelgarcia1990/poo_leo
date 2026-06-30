@@ -16,6 +16,7 @@ public class Main {
             ControladorJuego juego = new ControladorJuego();
             PantallaPrincipal frame = new PantallaPrincipal(juego);
             frame.setVisible(true);
+            frame.setLocationRelativeTo(null);
         });
     }
-}
+} 

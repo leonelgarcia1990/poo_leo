@@ -169,19 +169,23 @@ public class PantallaConfiguracion extends JFrame {
         String email = emailField.getText().trim();
 
         if (nombre.length() < 3) {
-            JOptionPane.showMessageDialog(this, "Ingresá un nombre de al menos 3 letras.");
+            JOptionPane.showMessageDialog(this, "Ingresá un nombre de al menos 3 letras.",
+                    "Nombre inválido", JOptionPane.PLAIN_MESSAGE, null);
             return;
         }
         if (!email.contains("@")) {
-            JOptionPane.showMessageDialog(this, "Ingresá un email válido (con @).");
+            JOptionPane.showMessageDialog(this, "Ingresá un email válido (con @).",
+                    "Email inválido", JOptionPane.PLAIN_MESSAGE,null);
             return;
         }
         if (indiceCaballoElegido() == -1) {
-            JOptionPane.showMessageDialog(this, "Elegí un caballo.");
+            JOptionPane.showMessageDialog(this, "Elegí un caballo.",
+                    "Caballo no seleccionado", JOptionPane.PLAIN_MESSAGE, null);
             return;
         }
         if (indicePistaElegida() == -1) {
-            JOptionPane.showMessageDialog(this, "Elegí una pista.");
+            JOptionPane.showMessageDialog(this, "Elegí una pista.",
+                    "Pista no seleccionada", JOptionPane.PLAIN_MESSAGE, null);
             return;
         }
 

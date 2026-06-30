@@ -36,7 +36,6 @@ public class Caballo {
     private double distanciaRecorrida = 0;
 
     protected Caballo() {
-        // Constructor requerido por JPA/Hibernate
     }
 
     public Caballo(String nombre, String tipo, int velocidadBase, int resistencia) {
@@ -50,7 +49,7 @@ public class Caballo {
         EstrategiaAvance.para(tipo).avanzar(this);
     }
 
-    // Métodos que usa la estrategia para modificar el estado de la carrera
+    
     public void avanzarDistancia(double distancia) {
         this.distanciaRecorrida += distancia;
     }

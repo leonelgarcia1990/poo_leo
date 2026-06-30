@@ -177,6 +177,6 @@ public class PantallaCarrera extends JFrame {
         cartel.add(lblGanados);
         cartel.add(lblTotal);
 
-        JOptionPane.showMessageDialog(this, cartel, "Fin de la carrera", JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showMessageDialog(this, cartel, "Fin de la carrera", JOptionPane.PLAIN_MESSAGE, null);
     }
 }

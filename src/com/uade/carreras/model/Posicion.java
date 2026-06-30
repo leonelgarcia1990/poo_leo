@@ -37,7 +37,7 @@ public class Posicion {
     private boolean esDelJugador;
 
     protected Posicion() {
-        // Constructor requerido por JPA/Hibernate
+       
     }
 
     public Posicion(Carrera carrera, Caballo caballo, int posicion,
