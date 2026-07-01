@@ -24,10 +24,6 @@ public class JPAUtil {
         return entityManagerFactory.createEntityManager();
     }
 
-    public void cerrar() {
-            if (entityManagerFactory.isOpen()) {
-                entityManagerFactory.close();
-            }
-        }
+  
 
 }
