@@ -6,9 +6,8 @@ import com.uade.carreras.dto.RankingDTO;
 
 import java.util.List;
 
-/**
- * Service responsable de los rankings de jugadores y caballos.
- */
+
+
 public class RankingService {
 
     private final JugadorDAO jugadorDAO = new JugadorDAO();

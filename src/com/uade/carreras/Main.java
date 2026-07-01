@@ -9,7 +9,7 @@ import javax.swing.SwingUtilities;
 public class Main {
 
     public static void main(String[] args) {
-        // Inicialización de la base de datos al arrancar (fuera de los services).
+        
         new InicializadorBaseDatosDAO().inicializar();
 
         SwingUtilities.invokeLater(() -> {

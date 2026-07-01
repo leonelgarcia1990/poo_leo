@@ -10,10 +10,7 @@ import com.uade.carreras.model.Pista;
 
 import java.util.List;
 
-/**
- * Service responsable de la carrera: listar las opciones para armarla
- * y persistir el resultado.
- */
+
 public class CarreraService {
 
     private final CaballoDAO caballoDAO = new CaballoDAO();
